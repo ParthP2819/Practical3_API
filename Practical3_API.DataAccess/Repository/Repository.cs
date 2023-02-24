@@ -4,6 +4,7 @@ using Practical3_API.DataAccess.Repository.IRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,24 +12,31 @@ namespace Practical3_API.DataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly ApplicationDbContext _db;
+        private ApplicationDbContext _db;
         internal DbSet<T> dbSet;
 
-        public Repository(ApplicationDbContext db) 
+        public Repository(ApplicationDbContext db)
         {
             _db = db;
             this.dbSet = _db.Set<T>();
         }
 
+
         public IEnumerable<T> GetAll()
         {
-            IQueryable<T> query = dbSet;
-            return query.ToList();
+            return dbSet.ToList();
         }
 
         public void add(T entity)
         {
-            dbSet.Add(entity);
+            _db.Set<T>().Add(entity);
+        }
+
+        public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
+        {
+            IQueryable<T> query = dbSet;
+            query = query.Where(filter);
+            return query.FirstOrDefault();
         }
     }
 }

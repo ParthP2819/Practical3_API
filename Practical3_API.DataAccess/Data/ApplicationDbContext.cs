@@ -20,7 +20,10 @@ namespace Practical3_API.DataAccess.Data
         }
         public DbSet<Orders> Orders { get; set; }
         public DbSet<OrderItems> OrderItems { get; set; }
-        
+
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Product> Products { get; set; }
 
 
     }

@@ -18,6 +18,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+// for DI
+//builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
 //for entity framework
 var con_string = builder.Configuration.GetConnectionString("con");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

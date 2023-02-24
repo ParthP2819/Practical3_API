@@ -16,17 +16,11 @@ namespace Practical3_API.Models
         [Required]
         public string Note { get; set; }
         [Required]
-        public double DisountAmount { get; set; }
-        
-        public enum StatusType 
-        {
-            Open,
-            Draft,
-            Shippped,
-            Paid
-        }
+        public double? DisountAmount { get; set; }
+
+        public string StatusType { get; set; }
         [Required]
-        public double TotalAmount { get; set; }
+        public double? TotalAmount { get; set; }
         [Required]
         public string CustomerName { get; set; }
         [Required]

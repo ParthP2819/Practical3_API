@@ -1,0 +1,51 @@
+﻿[HttpGet]
+        [Route("GetCategory/")]
+        public IEnumerable<Category> GetCategories()
+        {
+            return _unitOfWork.Category.GetAll();
+        }
+
+        [HttpGet]
+        [Route("GetProducts/")]
+        public IEnumerable<Product> GetProducts()
+        {
+            return _unitOfWork.Product.GetAll();
+        }
+        [HttpGet]
+        [Route("GetOrders/")]
+        public IEnumerable<Orders> GetOrder()
+        {
+            var result = _unitOfWork.Order.GetAll();
+            return result;
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("GetOrderById")]
+        public async Task<IActionResult> GetOrderById(string statusType)
+        {
+
+
+            var data = _unitOfWork.Order.GetAll();
+            var filterdata = data.Select(x => new { x.OrderId , x.Note, x.CreatedOn   });
+            return Ok(filterdata);
+        }
+
+        [HttpPost]
+        [Route("AddOrder")]
+        public async Task<IActionResult> AddOrder(Orders order)
+        {
+            _unitOfWork.Order.add(order);
+            _unitOfWork.Save();
+            return Ok(order);
+        }
+
+        [HttpPost]
+        [Route("AddOrderItems/")]
+
+        public async Task<IActionResult> AddOrderItems(OrderItems orderItems)
+        {
+            _unitOfWork.OrderItem.add(orderItems);
+            _unitOfWork.Save();
+            return Ok(orderItems);
+        }

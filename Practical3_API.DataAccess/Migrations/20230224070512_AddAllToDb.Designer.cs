@@ -11,8 +11,8 @@ using Practical3_API.DataAccess.Data;
 namespace Practical3_API.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230223122820_AddModelToDb")]
-    partial class AddModelToDb
+    [Migration("20230224070512_AddAllToDb")]
+    partial class AddAllToDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -261,7 +261,8 @@ namespace Practical3_API.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<double>("DisountAmount")
+                    b.Property<double?>("DisountAmount")
+                        .IsRequired()
                         .HasColumnType("double");
 
                     b.Property<bool>("IsActive")
@@ -277,7 +278,12 @@ namespace Practical3_API.DataAccess.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<double>("TotalAmount")
+                    b.Property<string>("StatusType")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<double?>("TotalAmount")
+                        .IsRequired()
                         .HasColumnType("double");
 
                     b.HasKey("OrderId");

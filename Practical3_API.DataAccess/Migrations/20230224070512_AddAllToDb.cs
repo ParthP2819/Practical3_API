@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Practical3_API.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddModelToDb : Migration
+    public partial class AddAllToDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -97,6 +97,8 @@ namespace Practical3_API.DataAccess.Migrations
                     Note = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DisountAmount = table.Column<double>(type: "double", nullable: false),
+                    StatusType = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     TotalAmount = table.Column<double>(type: "double", nullable: false),
                     CustomerName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),

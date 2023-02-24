@@ -22,8 +22,6 @@ namespace Practical2.Models
         public string ImageUrl { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.Now;
         public DateTime ModifiedOn { get; set; } = DateTime.Now;
-
-
         //Foreign Key
         [Display(Name = "Category")]
         public int CategoryId { get; set; }

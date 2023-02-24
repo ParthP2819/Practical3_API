@@ -13,12 +13,12 @@ namespace Practical3_API.DataAccess.Repository
     {
         private ApplicationDbContext _db;
 
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Category = new CategoryRepository(_db);
             Product = new ProductRepository(_db);
-
             Order = new OrderRepository(_db);
             OrderItem = new OrderItemRepository(_db);
         }
@@ -29,7 +29,7 @@ namespace Practical3_API.DataAccess.Repository
 
         public void Save()
         {
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
     }
 }
