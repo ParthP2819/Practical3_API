@@ -1,0 +1,86 @@
+﻿private IUnitOfWork _unitOfWork;
+        private UserManager<ApplicationUser> _userManager;
+        public OrderController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
+        {
+            _unitOfWork = unitOfWork;
+            _userManager = userManager;
+        }
+
+        [HttpGet]
+        [Route("GetProducts/")]
+        public async Task<IActionResult> GetProducts()
+        {
+            var result = _unitOfWork.Product.GetAll();
+            var prodList = result.Select(x => new
+            {
+                x.ProductId,
+                x.Name,
+                x.Quantity,
+                x.Price
+            });
+
+            return Ok(prodList);
+        }
+
+        [HttpGet]
+        [Route("GetOrders/")]
+        public async Task<IActionResult> GetOrder()
+        {
+            var result = _unitOfWork.Order.GetAll();
+            var filtData = result.Select(x => new
+            {
+                x.OrderId,
+                x.Note,
+                x.StatusType,
+                x.CreatedOn
+            });
+            return Ok(filtData);
+        }
+
+        [HttpPost]
+        [Route("AddOrder/")]
+        public async Task<IActionResult> AddOrder([FromBody] RequestOrderItems orderReq)
+        {
+            var user = await _userManager.FindByNameAsync(orderReq.Username);
+            var totalAmt = orderReq.Price * orderReq.Quantity;
+            if (user == null)
+            {
+                return BadRequest("You have to login first");
+            }
+            else
+            {
+                var check = _unitOfWork.Order.GetFirstOrDefault(x => x.CustomerName == orderReq.Username);
+                var orderData = new Orders()
+                {
+
+                    CustomerEmail = user.Email,
+                    CustomerName= orderReq.Username,
+                    CustomerContactNo = orderReq.ContactNo,
+                    StatusType = StatusType.Open.ToString(),
+                    IsActive = true,
+                    DisountAmount = 0,
+                    Note = "",
+                    TotalAmount = totalAmt
+                };
+                    _unitOfWork.Order.add(orderData);
+                _unitOfWork.Save();
+            }
+
+            var orderId = _unitOfWork.Order.GetFirstOrDefault(x => x.CustomerName == orderReq.Username);
+            var orderItemData = new OrderItems()
+            {
+                Quantity = orderReq.Quantity,
+                OrderId = orderId.OrderId,
+                ProductId = orderReq.ProductId,
+
+            };
+
+            _unitOfWork.OrderItem.add(orderItemData);
+            _unitOfWork.Save();
+
+
+            return Ok(new ResponseModel()
+            {
+                Message = "order Added successfully:"
+            });
+        }

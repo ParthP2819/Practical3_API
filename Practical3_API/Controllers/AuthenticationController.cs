@@ -7,7 +7,7 @@ using Practical3_API.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
+//AuthenticationController
 namespace Practical3_API.Controllers
 {
     [Route("api/[controller]")]
@@ -39,7 +39,8 @@ namespace Practical3_API.Controllers
                 {
                     Email = model.Email,
                     SecurityStamp = Guid.NewGuid().ToString(),
-                    UserName = model.Username
+                    UserName = model.Username,
+                    PhoneNumber = model.PhoneNumber,
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (!result.Succeeded)

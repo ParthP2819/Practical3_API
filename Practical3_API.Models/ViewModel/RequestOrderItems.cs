@@ -15,8 +15,8 @@ namespace Practical3_API.Models.ViewModel
         public int ProductId { get; set; }
         [Required]
         public int Quantity { get; set; }
-        [Required]
-        public string ContactNo { get; set; }
+        //[Required]
+        //public string ContactNo { get; set; }
         [Required]
         public double Price { get; set; }
     }

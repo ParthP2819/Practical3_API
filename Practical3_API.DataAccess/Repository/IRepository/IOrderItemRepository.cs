@@ -9,7 +9,6 @@ namespace Practical3_API.DataAccess.Repository.IRepository
 {
     public interface IOrderItemRepository : IRepository<OrderItems>
     {
-        void add(OrderItems orderItems);
         void Update(OrderItems obj);
     }
     

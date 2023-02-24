@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Practical3_API.DataAccess.Repository
 {
-    public class OrderItemRepository : Repository<OrderItems>, IOrderItemRepository
+    public class OrderItemRepository : Repository<OrderItems>, IOrderItemRepository 
     {
         private ApplicationDbContext _db;
 
@@ -17,6 +17,7 @@ namespace Practical3_API.DataAccess.Repository
         {
             _db = db;
         }
+
         public void Update(OrderItems obj)
         {
             _db.OrderItems.Update(obj);
